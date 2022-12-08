@@ -1,0 +1,36 @@
+node_modules
+### Terraform ###
+# Local .terraform directories
+**/.terraform/*
+**/.terraform.lock.hcl
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+# Crash log files
+crash.log
+
+# Ignore any .tfvars files that are generated automatically for each Terraform run. Most
+# .tfvars files are managed as part of configuration and so should be included in
+# version control.
+#
+secrets.auto.tfvars
+provisioning/secrets/*
+!provisioning/secrets/.keep
+
+# Local env files
+*.env
+
+# IDEs
+.vscode
+.idea
+*.iml
+.project
+.gradle/
+/nbproject/private/
+*.tmproj
+*.tmproject
+tmtags
+*.sublime-*
+
