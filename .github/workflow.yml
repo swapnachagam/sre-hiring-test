@@ -1,10 +1,6 @@
 name: Aircall Image Resize application
 
-on:
-  push:
-    branches: ["master"]
-  pull_request:
-    branches: ["aircall"]
+on: [ pull_request ]
 
 jobs:
   build:
