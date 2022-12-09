@@ -21,7 +21,7 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
       - name: Get image name
-        id: image-name
+        id: imagename
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: aircall
@@ -35,17 +35,17 @@ jobs:
           )" >> $GITHUB_OUTPUT
       - name: Build and Publish docker image to ECR
         run: |
-          docker build -t ${{ steps.image-name.outputs.name }} .
-          docker push ${{ steps.image-name.outputs.name }}
+          docker build -t ${{ steps.imagename.outputs.name }} .
+          docker push ${{ steps.imagename.outputs.name }}
       # - name: Scan Docker image
       #   id: docker-scan
       #   uses: alexjurkiewicz/ecr-scan-image@v1.7.0
       #   with:
       #     repository: aircall
-      #     tag: ${{ steps.image-name.outputs.tag }}
+      #     tag: ${{ steps.imagename.outputs.tag }}
       # - run: echo "${{ steps.docker-scan.outputs.total }} total vulnerabilities"
     outputs:  
-      secret-name: ${{ steps.image-name.outputs.secret-name }}
+      secret-name: ${{ steps.imagename.outputs.secret-name }}
   deploy:
     runs-on: ubuntu-latest
     needs: build
@@ -58,7 +58,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
       - name: Decrypt image name from previous build job
-        id: image-name
+        id: imagename
         run: |
           echo "name=$(gpg --decrypt --quiet --batch \
           --passphrase ${{ secrets.ENCRYPTION_SECRET }} \
@@ -84,4 +84,8 @@ jobs:
       - name: Plan Terraform 
         run: terraform plan -out tfplan
         env:
-          TF_VAR_image_url: ${{ steps.image-name.outputs.name }}
+          TF_VAR_image_url: ${{ steps.imagename.outputs.name }}
+      - name: Apply Terraform 
+        run: terraform apply -auto-approve tfplan
+        env:
+          TF_VAR_image_url: ${{ steps.imagename.outputs.name }}
