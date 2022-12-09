@@ -144,5 +144,4 @@ resource "aws_lambda_permission" "lambda_test_permission" {
   function_name = aws_lambda_function.aircall_test_lambda.arn
   principal     = "apigateway.amazonaws.com"
   source_arn    = "arn:aws:execute-api:eu-west-1:567673205078:${aws_api_gateway_rest_api.aircall-api-gateway-test.id}/*/POST/*"
-  statement_id  = "4f823635-c698-4354-b6a8-e1e702373496"
 }
