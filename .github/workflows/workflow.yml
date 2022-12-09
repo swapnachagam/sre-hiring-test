@@ -34,7 +34,7 @@ jobs:
             --output - <(echo "$REGISTRY/$REPOSITORY:$IMAGE_TAG") | base64 -w0 \
           )" >> $GITHUB_OUTPUT
       - name: Build and Publish docker image to ECR
-        run: >-
+        run: |
           docker build -t ${{ steps.image-name.outputs.name }} .
           docker push ${{ steps.image-name.outputs.name }}
       - name: Scan Docker image
