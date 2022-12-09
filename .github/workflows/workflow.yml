@@ -37,13 +37,13 @@ jobs:
         run: |
           docker build -t ${{ steps.image-name.outputs.name }} .
           docker push ${{ steps.image-name.outputs.name }}
-      - name: Scan Docker image
-        id: docker-scan
-        uses: alexjurkiewicz/ecr-scan-image@v1.7.0
-        with:
-          repository: aircall
-          tag: ${{ steps.image-name.outputs.tag }}
-      - run: echo "${{ steps.docker-scan.outputs.total }} total vulnerabilities"
+      # - name: Scan Docker image
+      #   id: docker-scan
+      #   uses: alexjurkiewicz/ecr-scan-image@v1.7.0
+      #   with:
+      #     repository: aircall
+      #     tag: ${{ steps.image-name.outputs.tag }}
+      # - run: echo "${{ steps.docker-scan.outputs.total }} total vulnerabilities"
     outputs:  
       secret-name: ${{ steps.image-name.outputs.secret-name }}
   deploy:
