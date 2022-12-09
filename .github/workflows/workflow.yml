@@ -42,7 +42,7 @@ jobs:
         uses: alexjurkiewicz/ecr-scan-image@v1.7.0
         with:
           repository: aircall
-          tag: ${{ steps.docker-build.outputs.tag }}
+          tag: ${{ steps.image-name.outputs.tag }}
       - run: echo "${{ steps.docker-scan.outputs.total }} total vulnerabilities"
     outputs:  
       secret-name: ${{ steps.image-name.outputs.secret-name }}
