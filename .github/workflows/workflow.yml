@@ -62,7 +62,7 @@ jobs:
         run: |
           echo "name=$(gpg --decrypt --quiet --batch \
           --passphrase ${{ secrets.ENCRYPTION_SECRET }} \
-          --output - <(echo "${{ needs.build.outputs.encrypted-name }}" \
+          --output - <(echo "${{ needs.build.outputs.secret-name }}" \
           | base64 -d))" >> $GITHUB_OUTPUT
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
